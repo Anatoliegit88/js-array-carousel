@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: black;
+}
+img {
+  width: 100%;
+}
+
+.big-img {
+  height: 440px;
+}
+.container {
+  width: 80vw;
+  height: 500px;
+  border: 30px solid white;
+  margin: auto;
+  margin-top: 5rem;
+}
+/* CHEVRON */
+.up .down {
+  background-color: white;
+  width: 20px;
+  height: 20px;
+}
+
+.fa {
+  color: white;
+}
