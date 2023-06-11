@@ -13,34 +13,86 @@
 //const oceanImg = document.getElementById(immage1);
 //console.log(oceanImg);
 
-const immagesArray = [];
-immagesArray[0] = new Image();
-immagesArray[0].src = "consegna/img/01.jpg";
-immagesArray[1] = new Image();
-immagesArray[1].src = "consegna/img/02.jpg";
-immagesArray[2] = new Image();
-immagesArray[2].src = "consegna/img/03.jpg";
-immagesArray[3] = new Image();
-immagesArray[3].src = "consegna/img/04.jpg";
-immagesArray[4] = new Image();
-immagesArray[4].src = "consegna/img/05.jpg";
-immagesArray[4].class = "visible-immage";
-console.log(immagesArray);
+// Inserire le immagini in modo dinamico
 
-const imgCarousel = document.querySelector("img-carousel");
-for (let i = 0; i < immagesArray.length; i++) {
-  const oneImg = immagesArray[i];
-  const element = `<div class="img-carousel">
-  <img src="${oneImg}" alt="" />
-</div>
-`;
-  imgcontainer.innerHTML += element;
+const images = [
+  "img/01.jpg",
+  "img/02.jpg",
+  "img/03.jpg",
+  "img/04.jpg",
+  "img/05.jpg",
+];
+
+const itemsContainer = document.querySelector(".items");
+const thumbsContainer = document.querySelector(".thumbs");
+let itemsList = "";
+let thumbslist = "";
+for (let i = 0; i < images.length; i++) {
+  // creo le immagini
+  itemsList += `<div class="item">
+                  <img src="${images[i]}" alt="imaage" />
+                </div>`;
+  // creo le thumbs
+  thumbslist += `<div class="thumb active">
+                    <img src="${images[i]}" alt="imaage" />
+                  </div>`;
 }
+itemsContainer.innerHTML += itemsList;
+thumbsContainer.innerHTML += thumbslist;
 
-// const vediArray = document.getElementById("contenitore");
-// console.log(vediArray);
+// Lo stao iniziale dello slider
+const sliderItems = document.getElementsByClassName("item");
+const thumbItems = document.getElementsByClassName("thumb");
+let activeItem = 0;
+sliderItems[activeItem].classList.add("active");
+thumbItems[activeItem].classList.add("active");
 
-// for (let i = 0; i < immagesArray.length; i++) {
-//   currentImmage = immagesArray[i];
-//   console.log(currentImmage);
-// }
+// Navigazione
+const btnUp = document.querySelector(".btn-up");
+btnUp = addEventListener("click", function () {
+  // Tolgo active
+  sliderItems[activeItem].classList.remove("active");
+  thumbItems[activeItem].classList.remove("active");
+
+  // Vado avanti fino al penultimo elemento
+  if (activeItem < sliderItems.length - 1) {
+    // Incremento la posizione
+    activeItem++;
+  } else {
+    activeItem = 0;
+  }
+  // Aggiungo active alla nuova posizione
+  sliderItems[activeItem].classList.add("active");
+  thumbItems[activeItem].classList.add("active");
+});
+
+const btndown = document.querySelector(".btn-down");
+btndown = addEventListener("click", function () {
+  sliderItems[activeItem].classList.remove("active");
+  thumbItems[activeItem].classList.remove("active");
+  // Vado indietro fino al secondo elemento
+  if (activeItem > 0) {
+    activeItem--;
+  } else {
+    // Altrimenti riparto dall'ultima elemento
+    activeItem = sliderItems.length - 1;
+  }
+  sliderItems[activeItem].classList.add("active");
+  thumbItems[active].classList.add("active");
+});
+
+// Aggiungere vista dello thumb al click
+
+for (let i = 0; i < thumbItems.length; i++) {
+  const thisThumb = thumbItems[i];
+  thisThumb.addEventListener("click", function () {
+    // Cancellare active da slider item e thumb
+    sliderItems[activeItem].classList.remove("active");
+    thumbItems[activeItem].classList.remove("active");
+    // Aggiorna la posizione
+    activeItem = i;
+    // Aggiungere active alla immagine del item e thumb
+    sliderItems[activeItem].classList.add("active");
+    thumbItems[activeItem].classList.add("active");
+  });
+}
